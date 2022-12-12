@@ -1,0 +1,53 @@
+﻿@model BikeMvc.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+    //Layout = "VLayout";
+}
+
+<h1 style="color:red; text-align:center">Login</h1>
+
+<style>
+    body {
+        background-image: url('/images/bla.jpg');
+        background-position: top;
+        /* background-repeat: no-repeat;*/
+        /*background-attachment:fixed;
+            background-size:100% 100%;*/
+    }
+</style>
+
+
+<hr />
+<div class="row row d-flex aligns-items-center justify-content-center">
+    <div class="col-md-4 card p-3 px-5 py-5 mt-3 bg-transparent border border-info">
+
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="p-2 " class="form-group">
+                <label style="color:red" asp-for="EmailId" class="control-label"></label>
+                <input asp-for="EmailId" class="form-control" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+            <div class="p-2" class="form-group">
+                <label style="color:red" asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="p-3" class="form-group">
+                <input type="submit" value="Login" class="btn-warning float-lg-end " />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

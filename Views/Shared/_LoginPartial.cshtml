@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccesor
+
+<ul class="navbar-nav">
+    @{
+        ViewBag.UserName = @HttpContextAccesor.HttpContext.Session.GetString("Username");
+        ViewBag.name = @HttpContextAccesor.HttpContext.Session.GetString("name");
+    }
+    @if (ViewBag.UserName != null)
+    {
+        <li class="nav-item">
+            <a @*id="Manage"*@ class="nav-link text-dark" @*asp-controller="Home" asp-action="Privacy"*@ title="Manage">Hello @ViewBag.UserName</a>
+        </li>
+        <li class="nav-item">
+            <form>
+                @* class="form-inline" asp-route-returnUrl="@Url.Action("Login", "Login", new { area = "" })">*@
+                <button id="Logout" type="submit" class="nav-link btn btn-link text-dark" asp-controller="User" asp-action="Logout">Logout</button>
+            </form>
+        </li>
+    }
+    else if (ViewBag.name != null)
+    {
+        <li class="nav-item">
+            <a @*id="Manage"*@ class="nav-link text-dark" @*asp-controller="Home" asp-action="Privacy"*@ title="Manage">Hello @ViewBag.name</a>
+        </li>
+        <li class="nav-item">
+            <form>
+                @* class="form-inline" asp-route-returnUrl="@Url.Action("Login", "Login", new { area = "" })">*@
+                <button id="Logout" type="submit" class="nav-link btn btn-link text-dark" asp-controller="Admin" asp-action="Logout">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <div class="dropdown">
+            <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Login
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" href="User/Login">Customer</a></li>
+                <li><a class="dropdown-item" href="Admin/Login">Admin</a></li>
+            </ul>
+        </div>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
+        </li>
+    }
+</ul>

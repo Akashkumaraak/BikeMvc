@@ -1,6 +1,9 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSession();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
@@ -15,7 +18,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
