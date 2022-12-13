@@ -24,7 +24,7 @@ namespace DemoClient.Controllers
                 {
                     string apiresponse = await response.Content.ReadAsStringAsync();
                     admin1 = JsonConvert.DeserializeObject<Admin>(apiresponse);
-                    HttpContext.Session.SetString("AdminName", admin1.Username);
+                    HttpContext.Session.SetString("name", admin1.Username);
                     return RedirectToAction("Index", "Product");
                 }
                 else

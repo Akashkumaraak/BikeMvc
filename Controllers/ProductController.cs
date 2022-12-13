@@ -49,7 +49,7 @@ namespace DemoClient.Controllers
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
-                using (var response = await client.GetAsync("https://localhost:44341/api/Movie/" + id))
+                using (var response = await client.GetAsync("https://localhost:44367/api/Product/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     m = JsonConvert.DeserializeObject<Product>(apiResponse);
@@ -85,7 +85,7 @@ namespace DemoClient.Controllers
             using (var client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(movietbl), Encoding.UTF8, "application/json");
-                using (var response = await client.PostAsync("https://localhost:44341/api/Movie", content))
+                using (var response = await client.PostAsync("https://localhost:44367/api/Product/PostProduct", content))
                 {
                     string apiresponse = await response.Content.ReadAsStringAsync();
                     product = JsonConvert.DeserializeObject<Product>(apiresponse);
@@ -100,7 +100,7 @@ namespace DemoClient.Controllers
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
-                using (var response = await client.GetAsync("https://localhost:44341/api/Movie/" + id))
+                using (var response = await client.GetAsync("https://localhost:44367/api/Product/" + id))
                 {
                     string apiResponse = await response.Content.ReadAsStringAsync();
                     m = JsonConvert.DeserializeObject<Product>(apiResponse);

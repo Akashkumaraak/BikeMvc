@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BikeMvc.Models.Product>
 @inject IHttpContextAccessor HttpContextAccesor
 
-@*@{
+@{
     ViewData["Title"] = "Bike Bully";
     ViewBag.Username = @HttpContextAccesor.HttpContext.Session.GetString("Username");
     if (ViewBag.Username != null)
@@ -12,7 +12,7 @@
     {
         Layout = "ALayout";
     }
-}*@
+}
 
 @*<style>
     body {
@@ -27,7 +27,7 @@
 
 
 <table class="table">
-   @* @if (ViewBag.Username != null)*@
+    @if (ViewBag.Username != null)
     {
 
         <thead>
@@ -107,15 +107,15 @@
             }
         </tbody>
     }
-    @*else
+    else
     {
-        <p>
-            @*<a asp-action="Create">Add Product|</a>
+      @*  <p>
+            <a asp-action="Create">Add Product|</a>
         <a asp-controller="Vendor" asp-action="Index">Vendors|</a>
         <a asp-action="SearchStudent">Search</a>
 
 
-        </p>
+        </p>*@
         <thead>
             <tr>
                 <th>
@@ -134,10 +134,10 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Stock)
                 </th>
-                @*<th>
+                <th>
             @Html.DisplayNameFor(model => model.CategoryId)
             </th>
-                @*   <th>
+                  <th>
             @Html.DisplayNameFor(model => model.Description)
             </th>
                 <th>
@@ -154,7 +154,7 @@
                         @Html.DisplayFor(modelItem => item.ProductName)
                     </td>
                     <td>
-                        @*  @Html.DisplayFor(modelItem => item.Image)
+                          @Html.DisplayFor(modelItem => item.Image)
                         <img src="/images/@item.Image" alt="Image" height="100" width="100" />
                     </td>
                     <td>
@@ -166,10 +166,10 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Stock)
                     </td>
-                    @*<td>
+                    <td>
             @Html.DisplayFor(modelItem => item.CategoryId)
-            </td>*@
-                    @* <td>
+            </td>
+                     <td>
             @Html.DisplayFor(modelItem => item.Description)
             </td>
                     <td>
@@ -184,4 +184,4 @@
             }
         </tbody>
     }
-</table>*@
+</table>
