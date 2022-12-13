@@ -57,23 +57,27 @@ namespace DemoClient.Controllers
             }
             return View(m);
         }
-        //public async Task<IActionResult> Search(DateTime searchdate)
-        //{
-        //    if (searchdate > DateTime.Now)
-        //    {
-        //        var movies = from m in _context.MovieTbls
-        //                     select m;
-        //        movies = movies.Where(s => s.Date!.Equals(searchdate));
-        //        return View(await movies.ToListAsync());
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Message = "Please enter the valid date..";
-        //        return View("Index");
-        //    }
-
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Search(string p)
+        {
+            List<Product> product = new List<Product>();
+            Product p1= new Product();
+            p1.ProductName = p;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                StringContent content = new StringContent(JsonConvert.SerializeObject(p1), Encoding.UTF8, "application/json");
+                HttpResponseMessage Res = await client.PostAsync("https://localhost:44367/api/Product", content);
+                //HttpResponseMessage Res = await client.GetAsync("https://localhost:44341/api/Movie?" + date);
+                if (Res.IsSuccessStatusCode)
+                {
+                    var response = Res.Content.ReadAsStringAsync().Result;
+                    product = JsonConvert.DeserializeObject<List<Product>>(response);
+                }
+                return View(product);
+            }
+        }
         public async Task<IActionResult> Create()
         {
             return View();
@@ -116,10 +120,45 @@ namespace DemoClient.Controllers
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
-                await client.DeleteAsync("https://localhost:44341/api/Movie/" + Id);
+                await client.DeleteAsync("https://localhost:44367/api/Product/" + Id);
 
             }
             return RedirectToAction("Index");
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            Product? p = new Product();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44367/api/Product/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    p = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+            return View(p);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Product product)
+        {
+            Product? p = new Product();
+
+            using (var httpClient = new HttpClient())
+            {
+                int id = product.ProductId;
+                httpClient.DefaultRequestHeaders.Clear();
+                StringContent content = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
+
+                using (var response = await httpClient.PutAsync("https://localhost:44367/api/Product", content))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    ViewBag.Result = "Success";
+                    p = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }
