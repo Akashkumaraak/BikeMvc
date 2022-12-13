@@ -8,18 +8,18 @@ namespace BikeMvc.Models
 {
     public partial class User
     {
-        public User()
-        {
-            Carts = new HashSet<Cart>();
-            OrderDetails = new HashSet<OrderDetail>();
-            OrderMasters = new HashSet<OrderMaster>();
-        }
+        //public User()
+        //{
+        //    Carts = new HashSet<Cart>();
+        //    OrderDetails = new HashSet<OrderDetail>();
+        //    OrderMasters = new HashSet<OrderMaster>();
+        //}
         [Key]
         public int UserId { get; set; }
         [Required(ErrorMessage = "*Enter a Username")]
         public string? UserName { get; set; }
         [Required(ErrorMessage = "*")]
-        public int? MobileNo { get; set; }
+        public string? MobileNo { get; set; }
         [Required(ErrorMessage = "Please enter the Email Id")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid Email ID")]
         public string? EmailId { get; set; }
@@ -33,8 +33,8 @@ namespace BikeMvc.Models
         [Required(ErrorMessage = "*")]
         public string? Pincode { get; set; }
 
-        public virtual ICollection<Cart> Carts { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual ICollection<OrderMaster> OrderMasters { get; set; }
+        //public virtual ICollection<Cart> Carts { get; set; }
+        //public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        //public virtual ICollection<OrderMaster> OrderMasters { get; set; }
     }
 }

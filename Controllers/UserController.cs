@@ -35,13 +35,20 @@ namespace DemoClient.Controllers
             {
                 client.DefaultRequestHeaders.Clear();
                 StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync("https://localhost:44367/api/Credential/UserLogin", content);
+                var response = await client.PostAsync("https://localhost:44367/api/Credential/UserLogin/", content);
                 if (response.IsSuccessStatusCode)
                 {
                     string apiresponse = await response.Content.ReadAsStringAsync();
                     user1 = JsonConvert.DeserializeObject<User>(apiresponse);
-                    HttpContext.Session.SetString("UserName", user.UserName);
-                    return RedirectToAction("Index", "Movie");
+                    //client.DefaultRequestHeaders.Clear();
+                    //StringContent content = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+                    //var response = await client.PostAsync("https://localhost:44367/api/Credential/UserLogin", content);
+                    //if (response.IsSuccessStatusCode)
+                    //{
+                    //    string apiresponse = await response.Content.ReadAsStringAsync();
+                    //    user1 = JsonConvert.DeserializeObject<User>(apiresponse);
+                    HttpContext.Session.SetString("UserName", user1.UserName);
+                    return RedirectToAction("Index", "Product");
                 }
                 else
                 {
