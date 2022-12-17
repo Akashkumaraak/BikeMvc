@@ -57,7 +57,27 @@ namespace DemoClient.Controllers
             }
             return View(m);
         }
-        [HttpPost]
+        public async Task<IActionResult> BuyNow(int id)
+        {
+            Product product = new Product();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Clear();
+                using (var response = await client.GetAsync("https://localhost:44367/api/Product/" + id))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    product = JsonConvert.DeserializeObject<Product>(apiResponse);
+                }
+            }
+            HttpContext.Session.SetInt32("Productid", product.ProductId);
+            HttpContext.Session.SetInt32("Price", (int)product.Price);
+            HttpContext.Session.SetString("PName", product.ProductName);
+            HttpContext.Session.SetString("PImage", product.Image);
+
+            return RedirectToAction("AddToCart", "Carts");
+
+        }
+            [HttpPost]
         public async Task<IActionResult> Search(string p)
         {
             List<Product> product = new List<Product>();
@@ -83,16 +103,16 @@ namespace DemoClient.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Product movietbl)
+        public async Task<IActionResult> Create(Product product)
         {
-            Product product = new Product();
+            Product product1 = new Product();
             using (var client = new HttpClient())
             {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(movietbl), Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(JsonConvert.SerializeObject(product), Encoding.UTF8, "application/json");
                 using (var response = await client.PostAsync("https://localhost:44367/api/Product/PostProduct", content))
                 {
                     string apiresponse = await response.Content.ReadAsStringAsync();
-                    product = JsonConvert.DeserializeObject<Product>(apiresponse);
+                    product1 = JsonConvert.DeserializeObject<Product>(apiresponse);
                 }
             }
             return RedirectToAction("Index");

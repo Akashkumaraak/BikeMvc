@@ -21,17 +21,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Carts" asp-action="Index"> Cart</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <form asp-controller="Product" asp-action="Search">
-                                <p>
-                                    Search By Name: <input type="text" name="p" />
-                                    <input type="submit" value="Search" />
-                                </p>
-                            </form>
-                            
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Search">Search</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Details" asp-action="Index">Order History</a>
@@ -59,4 +49,3 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

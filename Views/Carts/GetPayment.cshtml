@@ -1,0 +1,68 @@
+﻿@model BikeMvc.Models.OrderMaster
+
+@{
+    ViewData["Title"] = "Get Payment";
+    Layout = "ULayout";
+}
+
+
+
+<h4>Enter Payment Details</h4>
+<hr />
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="text-danger">@ViewBag.ErrorMessage</div>
+}
+@*<style>
+    body {
+        background-image: url('/images/Background1.jpg');
+        background-position: top;
+        /* background-repeat: no-repeat;*/
+        /*background-attachment:fixed;
+                    background-size:100% 100%;*/
+    }
+</style>*@
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GetPayment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="OrderMasterid" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CardNumber" class="control-label">Card Number</label>
+                <input asp-for="CardNumber" class="form-control" />
+                <span asp-validation-for="CardNumber" class="text-danger"></span>
+            </div>
+            @*  <div class="form-group">
+            <label asp-for="AmountPaid" class="control-label">Amount </label>
+            <input asp-for="AmountPaid" class="form-control" />
+            <span asp-validation-for="AmountPaid" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="hidden" asp-for="Orderdate" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label">TotalAmount </label>
+                <label asp-for="TotalAmount" class="form-control">@Model.TotalAmount</label>
+                <input asp-for="TotalAmount" hidden />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Userid" />
+            </div>
+
+            <div class="form-group">
+
+                <input type="submit" value="Pay" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
