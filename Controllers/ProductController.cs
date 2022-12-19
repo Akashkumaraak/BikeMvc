@@ -13,7 +13,12 @@ namespace DemoClient.Controllers
 
         public async Task<IActionResult> Index()
         {
+            ViewBag.UserName = HttpContext.Session.GetString("Username");
             List<Product> product = new List<Product>();
+            if (ViewBag.UserName != null)
+            {
+                ViewBag.ErrorMessage = "Out of Stock";
+            }
             using (var client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Clear();
@@ -119,7 +124,7 @@ namespace DemoClient.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            TempData["Id"] = id;
+            //id = (int)HttpContext.Session.GetInt32("Productid");
             Product? m = new Product();
             using (var client = new HttpClient())
             {
@@ -135,7 +140,7 @@ namespace DemoClient.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Product m)
         {
-            int Id = Convert.ToInt32(TempData["Id"]);
+            int? Id = m.ProductId;
             //Employee emp = new Employee();
             using (var client = new HttpClient())
             {

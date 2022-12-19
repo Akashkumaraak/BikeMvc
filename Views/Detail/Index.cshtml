@@ -1,10 +1,10 @@
-﻿@model IEnumerable<BikeMvc.Models.Cart>
+﻿@model IEnumerable<BikeMvc.Models.OrderDetail>
 @inject IHttpContextAccessor HttpContextAccesor
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "CLayout";
     ViewBag.Userid = @HttpContextAccesor.HttpContext.Session.GetInt32("Userid");
+    Layout = "HLayout";
 
 }
 @*<style>
@@ -17,7 +17,7 @@
     }
 </style>*@
 
-<h1> Your Cart</h1>
+<h1>Your Order History</h1>
 
 
 <table class="table">
@@ -27,19 +27,22 @@
                 @Html.DisplayNameFor(model => model.Product.ProductName)
             </th>
             <th>
-            @Html.DisplayNameFor(model => model.Product.Image)
+                @Html.DisplayNameFor(model => model.Product.Image)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                @Html.DisplayNameFor(model => model.Product.Price)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalAmount)
             </th>
-            @* <th>
-            @Html.DisplayNameFor(model => model.Product)
+            <th>
+                @Html.DisplayNameFor(model => model.OrderMaster.Orderdate)
+            </th>
+            @*<th>
+
             </th>
             <th>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.Product)
             </th>*@
             <th></th>
         </tr>
@@ -53,40 +56,34 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Product.ProductName)
                     </td>
+
                     <td>
-            <img src="/images/@item.Product.Image" alt="Image" height="100" width="100" />
-            </td>
+                        <img src="/images/@item.Product.Image" alt="Image" height="100" width="100" />
+                    </td>
+
                     <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
+                        @Html.DisplayFor(modelItem => item.Product.Price)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TotalAmount)
                     </td>
-
-
                     <td>
-                         <a asp-action="EditCart" asp-route-id="@item.Id">Edit Quantity</a> |
-                        @*<a asp-action="ProceedtoBuy" asp-route-id="@item.Id">ProceedToBuy</a> |*@
-                        <a asp-action="DeleteCart" asp-route-id="@item.Id">Delete</a>
+
+                        @Html.DisplayFor(modelItem => item.OrderMaster.Orderdate)
                     </td>
+                    @* <td>
+            @Html.DisplayFor(modelItem => item.OrderMaster.OrderMasterid)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Product.ProductId)
+            </td>*@
+                    @* <td>
+            <a asp-action="Edit" asp-route-id="@item.Orderid">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Orderid">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Orderid">Delete</a>
+            </td>*@
                 </tr>
             }
         }
     </tbody>
-    @if (ViewBag.ErrorMessage != null)
-    {
-        <div class="text-danger">
-            @ViewBag.ErrorMessage
-        </div>
-    }
-    else
-    {
-        <form asp-controller="Carts" asp-action="ProceedToBuy">
-
-            <div class="form-group">
-                <input type="submit" value="Buy" class="btn btn-primary" />
-            </div>
-
-        </form>
-    }
 </table>
